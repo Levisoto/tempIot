@@ -7,8 +7,10 @@
 #define WIFI_PASSWORD ""
 
 
+double data = 200;
 double vol;
 int itemp;
+int frac;
 
 void setup() {
   // put your setup code here, to run once:
@@ -24,16 +26,18 @@ void setup() {
 
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
   itemp = 0;
+  frac = 0;
 }
 
 
 void loop() {
   // put your main code here, to run repeatedly:
   while(itemp <= 50){
-    vol = analogRead(A0);
+    vol = data*sin(10*frac*3.14159/180);
+    frac++;  
     Serial.println(vol);
     Firebase.setFloat("/TempReport/"+String(itemp), vol);
-    delay(500);
+    delay(40);
     itemp++;
     }
   itemp = 0;
